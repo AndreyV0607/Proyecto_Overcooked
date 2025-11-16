@@ -4,9 +4,18 @@
 
 package com.mycompany.proyecto_overcooked;
 
+import com.mycompany.objetos.Ingrediente;
+import com.mycompany.objetos.Orden;
+import com.mycompany.Logicas.PilaHamburguesa;
 import java.lang.reflect.InaccessibleObjectException;
 import java.util.Arrays;
 import java.util.Random;
+import javax.swing.SwingUtilities;
+import com.mycompany.Logicas.*;
+import com.mycompany.objetos.*;
+import com.mycompany.GUI.*;
+import com.mycompany.controller.GameController;
+
 
 /**
  *
@@ -15,7 +24,40 @@ import java.util.Random;
 public class Proyecto_Overcooked {
 
     public static void main(String[] args) {
+        
+        // estos prints son de pruebas de las fotos
+        System.out.println("pan: " + GameUI.class.getResource("/imagenes/pan.png"));
+System.out.println("lechuga: " + GameUI.class.getResource("/imagenes/lechuga.png"));
+System.out.println("placeholder: " + GameUI.class.getResource("/imagenes/placeholder.png"));
 
+
+
+        // se instancian las estructuras
+        CintaCircularIngedientes cinta = new CintaCircularIngedientes();
+        PilaHamburguesa pila = new PilaHamburguesa();
+        ColaOrdenes cola = new ColaOrdenes();
+        GameController controller = new GameController(cinta, pila, cola);
+
+        
+        // se inicia lo visul, se incian los hilos de los tiempos
+        SwingUtilities.invokeLater(() -> {
+            GameUI ui = new GameUI(controller);
+            ui.setVisible(true);
+            controller.iniciarPartida();
+            ui.timer1s.start();
+            ui.timer20s.start();
+            ui.refrescarVista();
+        });
+    }
+}
+
+
+
+
+     
+        
+        
+        /*
         PilaHamburguesa pila = new PilaHamburguesa(); // pila donde se arma la hamburguesa
         Random random = new Random();// generador de 1 a 3
 
